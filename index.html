@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversión Segura 🤑</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e8f5e9; /* Fondo verde claro billete */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .pantalla {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 30px;
+            box-shadow: 0 15px 35px rgba(27, 94, 32, 0.2); /* Sombra verde oscuro */
+            border: 2px solid #ffd700; /* Borde dorado */
+            max-width: 85%;
+            transition: all 0.5s ease;
+        }
+
+        .emoji-grande { font-size: 8rem; margin: 20px 0; display: block; }
+        .emoji-medio { font-size: 5rem; margin: 20px 0; display: block; }
+
+        h1 { color: #1b5e20; font-size: 2rem; font-weight: 800; } /* Texto verde fuerte */
+        
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        #btnContinuar { background-color: #ffd700; color: #1b5e20; margin-top: 20px; border: 2px solid #1b5e20; }
+        #btnSi { background-color: #2e7d32; color: white; border: 2px solid #1b5e20;} /* Verde Billete */
+        #btnNo { background-color: #c62828; color: white; } /* Rojo Deuda */
+
+        .botones {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .oculto { display: none !important; }
+
+        /* Estilo para el mensaje final */
+        #mensajeExtra {
+            color: #d4af37; /* Dorado */
+            font-size: 2.5rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 0px #1b5e20;
+            margin-top: 20px;
+            animation: lluvia 0.5s infinite alternate;
+        }
+
+        @keyframes lluvia {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="pantalla" id="pantalla1">
+        <h1>¡HOLA FUTURO PATROCINADOR!</h1>
+        <span class="emoji-grande">🤑</span>
+        <button id="btnContinuar">Negociar</button>
+    </div>
+
+    <div class="pantalla oculto" id="pantalla2">
+        <h1 id="tituloPregunta">¿Me regalas dinero?</h1>
+        <span id="emojiPregunta" class="emoji-medio">🤲</span>
+        
+        <div id="mensajeExtra" class="oculto">¡PASAME EL COMPROBANTE!</div>
+
+        <div class="botones" id="bloqueBotones">
+            <button id="btnSi">¡Claro que sí!</button>
+            <button id="btnNo">No traigo</button>
+        </div>
+    </div>
+
+    <script>
+        const p1 = document.getElementById('pantalla1');
+        const p2 = document.getElementById('pantalla2');
+        const btnContinuar = document.getElementById('btnContinuar');
+        const btnSi = document.getElementById('btnSi');
+        const btnNo = document.getElementById('btnNo');
+        const emojiP = document.getElementById('emojiPregunta');
+        const tituloP = document.getElementById('tituloPregunta');
+        const mensajeExtra = document.getElementById('mensajeExtra');
+
+        let escalaSi = 1;
+        
+        // Frases graciosas para el NO
+        const frasesNo = [
+            "¿Seguro?", 
+            "¡No seas tacañ@!", 
+            "Acepto transferencias 💳", 
+            "¡Andale, necesito comer!", 
+            "¿Ni un pesito?", 
+            "¡Rompe el cochinito! 🐷", 
+            "Acepto Crypto 📉",
+            "¡Te voy a cobrar interés!"
+        ];
+        
+        // Emojis de dinero/pobreza para el NO
+        const emojisNo = ["💸", "📉", "🤏", "🏦", "🤥", "🕷️", "🧂", "🥺"];
+        
+        let i = 0;
+
+        btnContinuar.onclick = () => {
+            p1.classList.add('oculto');
+            p2.classList.remove('oculto');
+        };
+
+        btnNo.onclick = () => {
+            escalaSi += 0.5;
+            btnSi.style.transform = `scale(${escalaSi})`;
+            
+            // Cambiamos texto y emoji cíclicamente
+            btnNo.innerText = frasesNo[i % frasesNo.length];
+            emojiP.innerText = emojisNo[i % emojisNo.length];
+            i++;
+        };
+
+        btnSi.onclick = () => {
+            tituloP.innerText = "¡SABÍA QUE NO ERAS TACAÑO/A! 💰";
+            emojiP.innerText = "💸🥂💎🏦";
+            emojiP.className = "emoji-grande";
+            
+            // Mostramos el mensaje final
+            mensajeExtra.classList.remove('oculto');
+            
+            document.getElementById('bloqueBotones').classList.add('oculto');
+            // Fondo verde victoria
+            document.body.style.backgroundColor = "#66bb6a"; 
+        };
+    </script>
+</body>
+</html>
